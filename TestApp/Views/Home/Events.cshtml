@@ -1,46 +1,64 @@
 ﻿@model dynamic
 
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = "Event List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @section Scripts
 {
-
     <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
-
-
     <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.9.4/js/jquery.dataTables.js"></script>
 
 
     <script>
-        $(function () {
-            $("#example").dataTable();
-        })
+
+        var table = $("#eventGrid").dataTable({
+            "bSort": true,
+            "bServerSide": true,
+            "sAjaxSource": "@Url.Action("CustomServerSideSearchAction", "Home")",
+            "aoColumns": [{
+                "mData":"EventTitle"
+            },{
+                    "mData": "Technology"
+                }
+            ,{
+                "mData": "StartingDate"
+
+            },{
+                "mData": "RegistrationLink"
+            }
+            ]
+        });
+
+
+       $('#myInput').on( 'keyup', function () {
+           table.search( this.value ).draw();
+       } );
+
     </script>
 
 }
 
 
 <body>
-    <table id="example">
+    <table id="eventGrid" class="display" cellspacing="0" width="100%">
         <thead>
-            <tr><th>Sites</th></tr>
+            <tr>
+                <th>EventTitle</th>
+                <th>Technology</th>
+                <th>StartingDate</th>
+                <th>RegistrationLink</th>
+            </tr>
         </thead>
-        <tbody>
-            <tr><td>SitePoint</td></tr>
-            <tr><td>Learnable</td></tr>
-            <tr><td>Flippa</td></tr>
-        </tbody>
+        <tfoot>
+            <tr>
+                <th>EventTitle</th>
+                <th>Technology</th>
+                <th>StartingDate</th>
+                <th>RegistrationLink</th>
+            </tr>
+        </tfoot>
     </table>
 </body>
-
-
-
-
-
-
-
-

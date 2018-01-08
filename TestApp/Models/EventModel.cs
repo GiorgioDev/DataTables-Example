@@ -9,7 +9,7 @@ namespace TestApp.Models
 
         public string Technology;
         
-        public DateTime StartingDate;
+        public string StartingDate;
 
         public string RegistrationLink;
 
